@@ -1,6 +1,8 @@
 package com.epam.course.java.se;
 
 import com.epam.course.java.se.data.Account;
+import com.epam.course.java.se.data.AccountImpl;
+import com.epam.course.java.se.data.AccountWithReentrantLock;
 import org.junit.Test;
 
 public class AccountTest {
@@ -61,7 +63,7 @@ public class AccountTest {
 
     @Test
     public void sync() {
-        final Account account = new Account(1500);
+        final Account account = new AccountImpl(1500);
 
         final Runnable deposit500 = deposit500(account);
         final Runnable withdraw1000 = withdraw1000(account);
@@ -77,7 +79,29 @@ public class AccountTest {
 
     @Test
     public void async() throws InterruptedException {
-        final Account account = new Account(50000);
+        final Account account = new AccountImpl(150000);
+
+        final Runnable deposit500 = deposit500(account);
+        final Runnable withdraw1000 = withdraw1000(account);
+
+        final Thread threadDeposit = new Thread(deposit500);
+        final Thread threadWithdraw = new Thread(withdraw1000);
+
+        System.out.println(account.getBalance());
+
+        threadDeposit.start();
+        threadWithdraw.start();
+        Thread.yield();
+
+        threadDeposit.join();
+        threadWithdraw.join();
+
+        System.out.println(account.getBalance());
+    }
+
+    @Test
+    public void asyncWithLock() throws InterruptedException {
+        final Account account = new AccountWithReentrantLock(150000);
 
         final Runnable deposit500 = deposit500(account);
         final Runnable withdraw1000 = withdraw1000(account);

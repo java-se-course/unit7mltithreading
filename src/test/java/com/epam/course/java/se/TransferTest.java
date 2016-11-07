@@ -1,10 +1,11 @@
 package com.epam.course.java.se;
 
 import com.epam.course.java.se.data.Account;
+import com.epam.course.java.se.data.AccountImpl;
 import org.junit.Test;
 
 public class TransferTest {
-    private void transfer(Account from, Account to, int amount) {
+    private void transfer(AccountImpl from, AccountImpl to, int amount) {
         final Account ac1;
         final Account ac2;
 
@@ -29,8 +30,8 @@ public class TransferTest {
 
     @Test
     public void test1() throws InterruptedException {
-        final Account account1 = new Account(50000, 100000);
-        final Account account2 = new Account(50000, 100000);
+        final AccountImpl account1 = new AccountImpl(50000, 100000);
+        final AccountImpl account2 = new AccountImpl(50000, 100000);
 
         final Thread thread1 = new Thread(new Runnable() {
             @Override
@@ -59,4 +60,6 @@ public class TransferTest {
         System.out.println(account1.getBalance());
         System.out.println(account2.getBalance());
     }
+
+
 }

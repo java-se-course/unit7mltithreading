@@ -3,6 +3,8 @@ package com.epam.course.java.se;
 import com.epam.course.java.se.data.SetableFuture;
 import org.junit.Test;
 
+import java.util.concurrent.TimeUnit;
+
 public class SetableFutureTest {
     @Test
     public void test1() throws InterruptedException {
@@ -12,6 +14,7 @@ public class SetableFutureTest {
             @Override
             public void run() {
                 try {
+//                    TimeUnit.HOURS.sleep(2);
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
